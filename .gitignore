@@ -205,3 +205,12 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# TTS Pipeline specific
+output/audio/*.mp3
+output/audio/*.wav
+output/feed/
+claude-webchat-context-TTS-pipeline.md
+__pycache__
+output
+claude-webchat-context-overall-plan.md
