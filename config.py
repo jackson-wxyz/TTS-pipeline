@@ -32,16 +32,16 @@ USER_AGENT = (
 MAX_ARTICLE_CHARS = 100000  # ~25k words, ~2+ hours of audio
 
 # ── Podcast Feed Settings ────────────────────────────────────────────
-PODCAST_TITLE = "Jackson's Reading Queue"
+PODCAST_TITLE = "Eudæmonia Radio"
 PODCAST_DESCRIPTION = "Auto-generated audio from articles, blog posts, and essays."
 PODCAST_AUTHOR = "TTS Pipeline"
 PODCAST_LANGUAGE = "en"
-PODCAST_IMAGE_URL = ""  # optional: URL to a podcast cover image
+PODCAST_IMAGE_URL = "https://jacksonw.xyz/games/jadwiga_radio.png"  # optional: URL to a podcast cover image
 
 # Base URL where the feed and MP3s will be served from.
 # For local-only use, this is your desktop's LAN IP + port.
 # For remote access, point this at wherever you host the files.
-FEED_BASE_URL = "http://192.168.10.75:1234" #or "http://localhost:8888"?
+FEED_BASE_URL = "http://192.168.10.75:8888" #or "http://localhost:8888"?
 
 # Port for the built-in HTTP server that serves the feed
 FEED_SERVER_PORT = 8888
