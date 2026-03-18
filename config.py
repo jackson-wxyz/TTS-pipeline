@@ -10,7 +10,7 @@ Adjust these settings to match your local setup:
 import os as _os
 
 # ── Kokoro-FastAPI TTS Server ────────────────────────────────────────
-KOKORO_BASE_URL = "http://localhost:8880/v1"
+KOKORO_BASE_URL = "http://localhost:8880/v1" #or "http://192.168.10.75:1234/v1"??
 KOKORO_VOICE = "af_heart"  # see Kokoro docs for voice options
 KOKORO_SPEED = 1.0         # 1.0 = normal, 1.2 = slightly faster
 KOKORO_RESPONSE_FORMAT = "mp3"
@@ -18,8 +18,8 @@ KOKORO_RESPONSE_FORMAT = "mp3"
 # ── LM Studio (optional, for AI text preprocessing) ─────────────────
 LM_STUDIO_BASE_URL = "http://192.168.10.75:1234/v1"
 LM_STUDIO_API_KEY = "sk-lm-FaiipYw6:FVNsw8bZvEgxp61tn10X"
-CHAT_MODEL = "qwen/qwen3.5-9b"
-USE_LLM_PREPROCESSING = False  # set True to use LLM for audio-optimized text cleanup
+CHAT_MODEL = "qwen/qwen3.5-35b-a3b"
+USE_LLM_PREPROCESSING = True  # set True to use LLM for audio-optimized text cleanup
 
 # ── Fetcher Settings ─────────────────────────────────────────────────
 FETCH_TIMEOUT = 15  # seconds per URL
@@ -41,7 +41,7 @@ PODCAST_IMAGE_URL = ""  # optional: URL to a podcast cover image
 # Base URL where the feed and MP3s will be served from.
 # For local-only use, this is your desktop's LAN IP + port.
 # For remote access, point this at wherever you host the files.
-FEED_BASE_URL = "http://localhost:8888"
+FEED_BASE_URL = "http://192.168.10.75:1234" #or "http://localhost:8888"?
 
 # Port for the built-in HTTP server that serves the feed
 FEED_SERVER_PORT = 8888

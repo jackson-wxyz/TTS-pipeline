@@ -37,11 +37,7 @@ Kokoro is a lightweight 82M-parameter TTS model that runs at ~90x real-time on c
 
 ```bash
 # On your gaming desktop (needs Docker + NVIDIA GPU):
-docker run -d \
-  --gpus all \
-  -p 8880:8880 \
-  --name kokoro-tts \
-  ghcr.io/remsky/kokoro-fastapi:latest
+docker run -d  --gpus all -p 8880:8880   --name kokoro-tts kokoro-blackwell
 ```
 
 Verify it's running:
@@ -68,7 +64,7 @@ python main.py https://slatestarcodex.com/2014/07/30/meditations-on-moloch/
 
 ### Process a file of URLs
 ```bash
-python main.py --file urls.txt
+python main.py --file TTS_test_urls.txt
 ```
 
 The URL file format is simple — one URL per line, `#` for comments:
@@ -83,7 +79,7 @@ https://example.com/article-2  # interesting post about X
 python main.py --serve
 ```
 
-Then add `http://<your-ip>:8888/feed/feed.xml` to Pocket Casts.
+Then add `http://<your-ip>:8888/feed/feed.xml` to Pocket Casts. `http://192.168.10.75:1234:8888/feed/feed.xml`
 
 ### Other commands
 ```bash
