@@ -166,6 +166,18 @@ def main():
         help="Kokoro voice to use (default: from config)"
     )
 
+    # EPUB audiobook mode
+    parser.add_argument(
+        "--epub",
+        help="Convert an EPUB file to an audiobook"
+    )
+    parser.add_argument(
+        "--epub-mode", choices=["chapters", "single", "both"],
+        default="both",
+        help="EPUB output: 'chapters' (one MP3 per chapter), "
+             "'single' (one MP3 with chapter markers), 'both' (default)"
+    )
+
     # Utility commands
     parser.add_argument(
         "--feed-only", action="store_true",
@@ -212,6 +224,11 @@ def main():
 
     if args.serve:
         start_feed_server(args.port)
+        return
+
+    # ── EPUB mode ──────────────────────────────────────────────────
+    if args.epub:
+        _cmd_epub(args)
         return
 
     # ── Gather URLs ───────────────────────────────────────────────
@@ -352,6 +369,65 @@ def _cmd_feed_only():
     feed_path = regenerate_feed()
     print(f"\nFeed regenerated: {feed_path}")
     print(f"Subscribe at: {config.FEED_BASE_URL}/feed/feed.xml")
+
+
+def _cmd_epub(args):
+    """Convert an EPUB file to an audiobook."""
+    from epub_handler import generate_epub_audio
+    from tts_client import TTSClient
+
+    epub_path = args.epub
+    if not os.path.exists(epub_path):
+        print(f"Error: EPUB file not found: {epub_path}")
+        sys.exit(1)
+
+    tts = TTSClient(mock=args.mock)
+    if args.voice:
+        tts.voice = args.voice
+
+    print(f"\nConverting EPUB to audiobook: {epub_path}")
+    if args.mock:
+        print("  (using mock TTS — no Kokoro needed)")
+    print(f"  Output mode: {args.epub_mode}")
+    print()
+
+    result = generate_epub_audio(
+        epub_path=epub_path,
+        output_dir=config.AUDIO_DIR,
+        tts_client=tts,
+        mode=args.epub_mode,
+    )
+
+    book = result["book"]
+    chapter_files = result["chapter_files"]
+    combined_file = result["combined_file"]
+    errors = result["errors"]
+
+    print(f"\n{'='*60}")
+    print(f"  Audiobook Generation Complete")
+    print(f"{'='*60}")
+    print(f"  Book:     {book.title}")
+    print(f"  Author:   {book.author}")
+    print(f"  Chapters: {len(book.chapters)}")
+    print(f"  Words:    {book.total_words:,}")
+    print(f"  Est. duration: ~{book.estimated_minutes:.0f} minutes")
+
+    if chapter_files:
+        print(f"\n  Chapter files ({len(chapter_files)}):")
+        for f in chapter_files:
+            print(f"    {os.path.basename(f)}")
+
+    if combined_file:
+        size_mb = os.path.getsize(combined_file) / (1024 * 1024)
+        print(f"\n  Combined audiobook: {combined_file}")
+        print(f"  File size: {size_mb:.1f} MB")
+
+    if errors:
+        print(f"\n  Errors ({len(errors)}):")
+        for e in errors:
+            print(f"    ✗ {e}")
+
+    print(f"{'='*60}\n")
 
 
 if __name__ == "__main__":

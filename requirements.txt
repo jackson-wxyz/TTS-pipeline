@@ -5,4 +5,5 @@ requests>=2.28
 trafilatura>=1.6
 beautifulsoup4>=4.12
 curl_cffi>=0.7        # Chrome TLS impersonation — bypasses Cloudflare bot detection
-mutagen>=1.47         # MP3 ID3 tag editing (title, artist, album metadata)
+mutagen>=1.47         # MP3 ID3 tag editing (title, artist, album, chapter metadata)
+ebooklib>=0.18        # EPUB parsing for audiobook generation

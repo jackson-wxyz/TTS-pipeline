@@ -20,6 +20,7 @@ from fetcher import fetch_url, FetchResult
 from audio_lookup import check_existing_audio, AudioLookupResult
 from tts_client import TTSClient
 from feed_generator import regenerate_feed
+from chapters import add_chapters_to_mp3
 
 logger = logging.getLogger(__name__)
 
@@ -174,9 +175,16 @@ class Pipeline:
                 )
             audio_source = "kokoro-tts"
 
-        # ── Step 5: Tag MP3 with metadata ─────────────────────────
+        # ── Step 5: Tag MP3 with metadata & chapters ────────────
         if audio_path and os.path.exists(audio_path):
             _tag_mp3(audio_path, title=title, author=author, url=url)
+
+            # Embed chapter markers from headings in the raw text
+            num_chapters = add_chapters_to_mp3(
+                audio_path, fetch_result.text, title=title
+            )
+            if num_chapters:
+                logger.info(f"  Added {num_chapters} chapters")
 
         # ── Step 6: Record in database ────────────────────────────
         file_size = os.path.getsize(audio_path) if os.path.exists(audio_path) else 0
