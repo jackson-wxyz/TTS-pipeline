@@ -4,8 +4,8 @@ before generating TTS.
 
 The EA/rationalist ecosystem has extensive audio coverage:
   - EA Forum: TYPE III AUDIO narrations (30+ karma → "All audio" feed,
-    125+ karma → "Curated and Popular" feed)
-  - LessWrong: TYPE III AUDIO narrations (30+ karma feed)
+    125+ karma → "Curated and Popular" feed) — we check both
+  - LessWrong: TYPE III AUDIO narrations (30+ karma feed + curated via Buzzsprout)
   - The Nonlinear Library: AI narrations on Spotify, Apple Podcasts, etc.
   - Solenoid Entity: human narrations of ACX/SSC and LW Curated
 
@@ -39,12 +39,22 @@ logger = logging.getLogger(__name__)
 RSS_FEEDS = [
     (
         "https://forum-podcasts.effectivealtruism.org/ea-forum--all.rss",
-        "eaforum-type3audio",
+        "eaforum-type3audio-all",
+        "forum.effectivealtruism.org",
+    ),
+    (
+        "https://forum-podcasts.effectivealtruism.org/ea-forum--curated-popular.rss",
+        "eaforum-type3audio-curated",
         "forum.effectivealtruism.org",
     ),
     (
         "https://feeds.type3.audio/lesswrong--30-karma.rss",
-        "lesswrong-type3audio",
+        "lesswrong-type3audio-30karma",
+        "lesswrong.com",
+    ),
+    (
+        "https://rss.buzzsprout.com/2037297.rss",
+        "lesswrong-type3audio-curated",
         "lesswrong.com",
     ),
 ]
