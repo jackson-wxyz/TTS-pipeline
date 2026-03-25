@@ -6,7 +6,7 @@ OpenAI-compatible API server. It runs via Docker with GPU support
 and exposes a /v1/audio/speech endpoint at localhost:8880.
 
 Setup (on your gaming desktop):
-    docker run -d --gpus all -p 8880:8880 ghcr.io/remsky/kokoro-fastapi:latest
+    docker run -d --name kokoro-ebooks --gpus all -p 8880:8880 kokoro-fastapi-blackwell:latest     #ghcr.io/remsky/kokoro-fastapi:latest
 
 The client just makes HTTP POST requests — no PyTorch needed locally.
 """

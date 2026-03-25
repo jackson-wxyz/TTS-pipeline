@@ -1,0 +1,2 @@
+FROM ghcr.io/remsky/kokoro-fastapi-gpu:latest
+RUN uv pip install --python /app/.venv/bin/python torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
